@@ -1,0 +1,66 @@
+<div class="container py-4">
+  <div class="card">
+    <div class="col text-center">
+        <h5>Consultar DAC´s Vs Tiquetes</h5>
+      </div>
+      <div>
+        <br/>
+        <app-filters (listDacTickes)="addItem($event)" ></app-filters>
+        <br/>
+      </div>
+      <div class="table-responsive">
+        <table name="form" class="table table-striped table-bordered" >
+          <thead class="thead-inverse">
+          <tr >
+            <th scope="col">Categorias</th>
+            <th scope="col" colspan="3" class="text-center">Tiquetes</th>
+            <th scope="col" colspan="3" class="text-center" >DAC´s</th>
+            <th></th>
+          </tr>
+          <tr>
+            <th scope="col"></th>
+            <th>Generados</th>
+            <th>Disponibles</th>
+            <th>Conciliados</th>
+            <th>Generados</th>
+            <th>Disponibles</th>
+            <th>Conciliados</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let dacTick of dacTicket">
+            <td>{{dacTick.category}}</td>
+            <td>{{dacTick.dacG}}</td>
+            <td>{{dacTick.dacD}}</td>
+            <td>{{dacTick.dacC}}</td>
+            <td>{{dacTick.ticketG}}</td>
+            <td>{{dacTick.ticketD}}</td>
+            <td>{{dacTick.ticketC}}</td>
+            <td class="text-center"><input [disabled]="false" type="checkbox"   class="form-check-input" name="exampleCheck1" (change)="selectionConciliation(dacTick, $event.target.checked)" /></td>
+          </tr>
+          </tbody>
+          <tfoot  class="table-row-group">
+            <tr *ngIf="dacTicket == null ">
+              <th colspan="8">
+                <div class="alert alert-info" role="alert">
+                  Por favor filtre en el buscador
+                </div>
+              </th>
+            </tr>
+            <tr *ngIf=" dacTicket !== undefined && dacTicket.length == 0 ">
+              <th colspan="8">
+                <div class="alert alert-warning" role="alert">
+                  No se obtuvieron registro por la busqueda
+                </div>
+              </th>
+            </tr>
+          </tfoot>
+          <caption class="text-center">
+            <button class="btn btn-primary mx-3" type="button"  (click)="conciliationMasive()">Conciliacion Masiva</button>
+            <button class="btn btn-outline-primary mx-3"  (click)="clear()" >Limpiar</button>
+          </caption>
+        </table>
+      </div>
+  </div>
+</div>

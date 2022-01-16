@@ -1,0 +1,77 @@
+<div class="container py-1" >
+  <header class="h6 text-center">Filtros de busqueda</header>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="filterForm" (ngSubmit)="loadParams()">
+        <div class="row">
+          <div class="form-group col-md-6" style="padding-top: 0">
+            <label class="col-form-label">Estacion: </label>
+              <select type="number" class="form-control" formControlName="STATIONAME" (ngModelChange)="LoadParametersStation()"
+                      name="stationId" [disabled]="false">
+                <option  selected >Seleccione estacion
+                </option>
+                <option *ngFor="let toll of tolls" value="{{ toll.code }}">{{ toll.name }}
+                </option>
+              </select>
+              <div class="alert alert-danger"
+                   *ngIf="filterForm.controls['STATIONAME'].invalid
+                     && filterForm.controls['STATIONAME'].value === undefined">
+                <small class="form-text text-danger">Estacion es invalida</small>
+              </div>
+          </div>
+          <div class="form-group col-md-6" style="padding-top: 0">
+            <label class="col-form-label">Carril: </label>
+              <select type="number" class="form-control" formControlName="LANECODE"
+                      name="laneId" required   >
+                <option  selected >Seleccione carril
+                </option>
+                <option *ngFor="let lane of lanes" value="{{ lane.code }}">{{ lane.label }}
+                </option>
+              </select>
+              <div class="alert alert-danger"
+                   *ngIf="filterForm.controls['LANECODE'].invalid
+                     && filterForm.controls['LANECODE'].value === undefined">
+                <small class="form-text text-danger">Carril es invalido</small>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6" style="padding-top: 0">
+            <label class="col-form-label">Fecha de recaudo: </label>
+              <input type="date" class="form-control" formControlName="DATECOLLECTION"
+                     name="DATECOLLECTION" required  />
+
+          </div>
+          <div class="form-group col-md-6" style="padding-top: 0">
+            <label class="col-form-label">Turno: </label>
+              <select type="number" class="form-control" formControlName="TURNCODE"
+                      name="turnoId" required  [disabled]="filterForm.controls['STATIONAME'].value !== null" >
+                <option   selected >Seleccione turno
+                </option>
+                <option *ngFor="let shift of shifts"  value="{{ shift.code }}">{{ shift.label }}
+                </option>
+              </select>
+              <div class="alert alert-danger"
+                   *ngIf="filterForm.controls['TURNCODE'].invalid
+                     && filterForm.controls['TURNCODE'].value === undefined">
+                <small class="form-text text-danger">Turno es invalido</small>
+              </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <br/>
+          <div class=" mx-auto text-center">
+            <button class="btn btn-primary mx-3" role="button"
+            type="submit"> Consultar </button>
+               <!--
+            --- si el filtro de busqueda es obligatorio ------
+            [disabled]="filterForm.controls['TURNCODE'].value === null
+            && filterForm.controls['DATECOLLECTION'].value === '' &&  filterForm.controls['LANECODE'].value === null" -->
+            <!--              </ng-template>-->
+            <!--              <button class="btn btn-outline-primary mx-3" role="button" (click)='salir()'>Cancelar</button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
